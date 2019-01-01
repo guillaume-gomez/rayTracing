@@ -24,6 +24,13 @@ class Vector3
         Vector3& operator*=(const float coeff);
         Vector3 operator/(const float coeff);
         Vector3& operator/=(const float coeff);
+        float operator*(const Vector3 source);
+        Vector3 operator^(const Vector3 source);
+        Vector3& operator^=(const Vector3 source);
+        float magnitude();
+        float magnitude_sqr();
+        Vector3 normalised();
+        Vector3& normalise();
         virtual ~Vector3();
     protected:
     private:

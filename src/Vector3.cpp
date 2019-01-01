@@ -1,4 +1,5 @@
 #include "Vector3.h"
+#include <math.h>
 
 Vector3::Vector3(float _x, float _y, float _z)
 : x(_x), y(_y), z(_z)
@@ -55,6 +56,45 @@ Vector3& Vector3::operator/=(const float coeff) {
     z = z / coeff;
     return *this;
 }
+
+float Vector3::operator*(const Vector3 source) {
+    return (x * source.x) + (y * source.y) + (z * source.z);
+}
+
+Vector3 Vector3::operator^(const Vector3 source) {
+    float nx = y * source.z - source.y * z;
+    float ny = z * source.x - source.z * x;
+    float nz = x * source.y - source.x * y;
+    return Vector3(nx, ny, nz);
+}
+
+Vector3& Vector3::operator^=(const Vector3 source) {
+    float nx = y * source.z - source.y * z;
+    float ny = z * source.x - source.z * x;
+    float nz = x * source.y - source.x * y;
+    x = nx;
+    y = ny;
+    z = nz;
+    return *this;
+}
+
+float Vector3::magnitude() {
+    return sqrt(magnitude_sqr());
+}
+
+float Vector3::magnitude_sqr() {
+    return (x * x) + (y * y) + (z * z);
+}
+
+Vector3 Vector3::normalised() {
+    return Vector3(*this) / magnitude();
+}
+
+Vector3& Vector3::normalise() {
+    (*this) /= magnitude();
+    return *this;
+}
+
 
 Vector3::~Vector3()
 {
