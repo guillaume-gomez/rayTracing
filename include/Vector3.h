@@ -18,6 +18,12 @@ class Vector3
         Vector3(const Vector3& copy);
         Vector3 operator+(const Vector3& source);
         Vector3& operator+=(const Vector3& source);
+        Vector3 operator-(const Vector3& source);
+        Vector3& operator-=(const Vector3& source);
+        Vector3 operator*(const float coeff);
+        Vector3& operator*=(const float coeff);
+        Vector3 operator/(const float coeff);
+        Vector3& operator/=(const float coeff);
         virtual ~Vector3();
     protected:
     private:
