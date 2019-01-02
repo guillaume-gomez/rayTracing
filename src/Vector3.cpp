@@ -13,6 +13,13 @@ Vector3::Vector3(const Vector3& original)
 
 }
 
+Vector3& Vector3::operator=(const Vector3& source) {
+    x = source.x;
+    y = source.y;
+    z = source.z;
+    return *this;
+}
+
 Vector3 Vector3::operator+(const Vector3& source) {
     return Vector3(x + source.x, y + source.y, z + source.z);
 }
