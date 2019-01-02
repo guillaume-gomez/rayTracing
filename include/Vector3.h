@@ -16,6 +16,7 @@ class Vector3
 
         Vector3(float x = 0, float y = 0, float z = 0);
         Vector3(const Vector3& copy);
+        Vector3& operator=(const Vector3& source);
         Vector3 operator+(const Vector3& source);
         Vector3& operator+=(const Vector3& source);
         Vector3 operator-(const Vector3& source);
