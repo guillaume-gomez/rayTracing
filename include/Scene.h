@@ -2,11 +2,16 @@
 #define SCENE_H
 
 #include <vector>
+#include "SceneObject.h"
+#include "Light.h"
+#include "Camera.h"
 
 class Scene
 {
     public:
-        Scene();
+        Scene(const Camera& camera);
+        void addLight(const Light& light);
+        void addObject(const SceneObject& object);
         virtual ~Scene();
     private:
         Camera camera;
