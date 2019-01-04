@@ -34,8 +34,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Camera.h" />
+		<Unit filename="include/Light.h" />
+		<Unit filename="include/Scene.h" />
+		<Unit filename="include/SceneObject.h" />
+		<Unit filename="include/Sphere.h" />
 		<Unit filename="include/Vector3.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Camera.cpp" />
+		<Unit filename="src/Light.cpp" />
+		<Unit filename="src/Scene.cpp" />
+		<Unit filename="src/SceneObject.cpp" />
+		<Unit filename="src/Sphere.cpp" />
 		<Unit filename="src/Vector3.cpp" />
 		<Extensions>
 			<code_completion />
