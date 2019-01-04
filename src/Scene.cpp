@@ -15,6 +15,10 @@ void Scene::addObject(const SceneObject& object) {
     objects.push_back(object);
 }
 
+void Scene::render() {
+    // TODO
+}
+
 Scene::~Scene()
 {
     //dtor

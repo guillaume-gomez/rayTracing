@@ -12,6 +12,7 @@ class Scene
         Scene(const Camera& camera);
         void addLight(const Light& light);
         void addObject(const SceneObject& object);
+        void render();
         virtual ~Scene();
     private:
         Camera camera;
