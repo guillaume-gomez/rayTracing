@@ -10,6 +10,7 @@ class Camera
         Camera(const Camera& copy);
         Camera& operator=(const Camera& source);
         virtual ~Camera();
+        Vector3 eyeVector();
     private:
         Vector3 point;
         Vector3 direction;

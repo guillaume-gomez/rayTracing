@@ -19,6 +19,11 @@ Camera& Camera::operator=(const Camera& source) {
     return *this;
 }
 
+Vector3 Camera::eyeVector() {
+    Vector3 vec = direction - point;
+    return vec.unitVector();
+}
+
 Camera::~Camera()
 {
     //dtor
