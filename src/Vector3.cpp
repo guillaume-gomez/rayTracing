@@ -102,6 +102,11 @@ Vector3& Vector3::normalise() {
     return *this;
 }
 
+Vector3 Vector3::unitVector() {
+    float scale = 1.0f / magnitude();
+    return (*this) * scale;
+}
+
 
 Vector3::~Vector3()
 {

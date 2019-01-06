@@ -32,6 +32,7 @@ class Vector3
         float magnitude_sqr();
         Vector3 normalised();
         Vector3& normalise();
+        Vector3 unitVector();
         virtual ~Vector3();
     protected:
     private:
