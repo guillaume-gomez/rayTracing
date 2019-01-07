@@ -85,6 +85,22 @@ Vector3& Vector3::operator^=(const Vector3 source) {
     return *this;
 }
 
+Vector3 Vector3::crossProduct(const Vector3 a, const Vector3 b) {
+    return Vector3(
+        (a.y * b.z) - (a.z * b.y),
+        (a.z * b.x) - (a.x * b.z),
+        (a.x * b.y) - (a.y * b.x)
+    );
+}
+
+Vector3 Vector3::crossProduct(const Vector3 b) {
+    return Vector3(
+        (y * b.z) - (z * b.y),
+        (z * b.x) - (x * b.z),
+        (x * b.y) - (y * b.x)
+    );
+}
+
 float Vector3::magnitude() {
     return sqrt(magnitude_sqr());
 }

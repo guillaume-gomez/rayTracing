@@ -33,6 +33,8 @@ class Vector3
         Vector3 normalised();
         Vector3& normalise();
         Vector3 unitVector();
+        static  Vector3 crossProduct(const Vector3 a, const Vector3 b);
+        Vector3 crossProduct(const Vector3 b);
         virtual ~Vector3();
     protected:
     private:
