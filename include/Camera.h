@@ -11,7 +11,10 @@ class Camera
         Camera& operator=(const Camera& source);
         virtual ~Camera();
         Vector3 eyeVector();
-    private:
+        float getFov() const { return fov; };
+        const Vector3& getPoint() const { return point; };
+        const Vector3& getDirection() const { return direction; };
+     private:
         Vector3 point;
         Vector3 direction;
         float fov;

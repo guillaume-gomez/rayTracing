@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "SceneObject.h"
+#include "Ray.h"
 #include "Light.h"
 #include "Camera.h"
 
@@ -12,7 +13,7 @@ class Scene
         Scene(float width, float height, const Camera& camera);
         void addLight(const Light& light);
         void addObject(const SceneObject& object);
-        void render();
+        std::vector<unsigned char> render();
         const float getWidth() const { return width; };
         const float getHeight() const { return height; };
         virtual ~Scene();
@@ -22,6 +23,8 @@ class Scene
         Camera camera;
         std::vector<Light> lights;
         std::vector<SceneObject> objects;
+
+        Vector3 trace(Ray& ray, float depth);
 };
 
 #endif // SCENE_H
