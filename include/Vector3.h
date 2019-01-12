@@ -20,6 +20,7 @@ class Vector3
         Vector3 operator+(const Vector3& source);
         Vector3& operator+=(const Vector3& source);
         Vector3 operator-(const Vector3& source);
+        Vector3 operator-(const Vector3& source) const;
         Vector3& operator-=(const Vector3& source);
         Vector3 operator*(const float coeff);
         Vector3& operator*=(const float coeff);
