@@ -1,2 +1,2 @@
-# rayTracing
-rayTracing in C++
+# Ray tracer
+rayTracer coded in C++
