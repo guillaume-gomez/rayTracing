@@ -20,6 +20,10 @@ float Sphere::intersect(const Ray& ray) const {
     }
 }
 
+Vector3 Sphere::computeNormal(const Ray& pos) const {
+    return (pos - point).unitVector();
+}
+
 Sphere::~Sphere()
 {
     //dtor
