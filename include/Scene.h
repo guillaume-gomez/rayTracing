@@ -17,8 +17,9 @@ class Scene
     public:
         Scene(float width, float height, const Camera& camera);
         void addLight(const Light& light);
-        void addObject(const SceneObject& object);
+        void addObject(const SceneObject* object);
         std::vector<unsigned char> render();
+        distObject intersectScene(const Ray& ray);
         const float getWidth() const { return width; };
         const float getHeight() const { return height; };
         virtual ~Scene();
@@ -30,6 +31,7 @@ class Scene
         std::vector<SceneObject> objects;
 
         Vector3 trace(Ray& ray, float depth);
+        bool isLightVisible(const Vector3 point, const Light light);
 };
 
 #endif // SCENE_H
