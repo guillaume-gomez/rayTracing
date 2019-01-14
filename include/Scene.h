@@ -28,7 +28,7 @@ class Scene
         float height;
         Camera camera;
         std::vector<Light> lights;
-        std::vector<SceneObject> objects;
+        std::vector<const SceneObject*> objects;
 
         Vector3 trace(Ray& ray, float depth);
         bool isLightVisible(const Vector3 point, const Light light);
