@@ -7,6 +7,11 @@
 #include "Light.h"
 #include "Camera.h"
 
+struct distObject {
+    double distance;
+    const SceneObject* object;
+};
+
 class Scene
 {
     public:
