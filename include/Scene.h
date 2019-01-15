@@ -8,7 +8,7 @@
 #include "Camera.h"
 
 struct distObject {
-    double distance;
+    float distance;
     const SceneObject* object;
 };
 
