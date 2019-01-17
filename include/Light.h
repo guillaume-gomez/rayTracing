@@ -7,6 +7,7 @@ class Light
     public:
         Light(const Vector3 position);
         virtual ~Light();
+        Vector3 getPosition() const { return position; };
     private:
         Vector3 position;
 };
