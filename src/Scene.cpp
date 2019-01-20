@@ -4,7 +4,7 @@
 #include <math.h>
 #include <limits>
 
-// #include <iostream>
+#include <iostream>
 
 Scene::Scene(float _width, float _height, const Camera& _camera)
 : width(_width), height(_height), camera(_camera)
@@ -21,21 +21,6 @@ void Scene::addObject(const SceneObject* object) {
 }
 
 std::vector<unsigned char> Scene::render() {
-    Vector3 eyeVector = camera.eyeVector();
-    Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
-
-    Vector3 vpRight = (Vector3::crossProduct(eyeVector, up)).unitVector();
-    Vector3 vpUp = (Vector3::crossProduct(vpRight, eyeVector)).unitVector();
-
-    float fovRadians = M_PI * (camera.getFov() / 2.0f) / 180.f;
-    float heightWidthRatio = height / width;
-    float halfWidth = tan(fovRadians);
-    float halfHeight = heightWidthRatio * halfWidth;
-    float camerawidth = halfWidth * 2.0f;
-    float cameraheight = halfHeight * 2.0f;
-    float pixelWidth = camerawidth / (width - 1.0f);
-    float pixelHeight = cameraheight / (height - 1.0f);
-
     unsigned int index, color;
     Ray ray = Ray(camera.getPoint());
 
@@ -44,15 +29,26 @@ std::vector<unsigned char> Scene::render() {
     for (unsigned int x = 0; x < width; x++) {
         for (unsigned int y = 0; y < height; y++) {
 
-            // turn the raw pixel `x` and `y` values into values from -1 to 1
-            // and use these values to scale the facing-right and facing-up
-            // vectors so that we generate versions of the `eyeVector` that are
-            // skewed in each necessary direction.
-            Vector3 xcomp = vpRight * ( (x * pixelWidth) - halfWidth);
-            Vector3 ycomp = vpUp    * ( (y * pixelHeight) - halfHeight);
+            // Affichage de notre "barre de progression" ;)
+            if (x==0 && y==0.25f*height) {
+                std::cout << "25 percent completed !\n" << std::endl;
+            }
 
+            if (x==0 && y==0.5f*height) {
+                std::cout << "50 percent completed !\n" << std::endl;
+            }
 
-            Vector3 rayDirection = (eyeVector + xcomp + ycomp).unitVector();
+            if (x==0 && y==0.75f*height) {
+                std::cout << "75 percent completed !\n" << std::endl;
+            }
+
+            if (x==0 && y==height-1) {
+                std::cout << "100 percent completed !\n" << std::endl;
+            }
+
+            Vector3 rayDirection = camera.calcDirVec(float(x), float(y), width, height); //(eyeVector + xcomp + ycomp).unitVector();
+            //std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z << std::endl;
+
             ray.setDirection(rayDirection);
 
             // use the vector generated to raytrace the scene, returning a color
@@ -75,7 +71,7 @@ Vector3 Scene::trace(Ray& ray, float depth) {
 
     distObject distObject = intersectScene(ray);
     if(distObject.object == NULL) {
-        return Vector3(255.f, 200.0f, 10.f);
+        return Vector3(255.f, 100.0f, 100.f);
     }
     return distObject.object->getColor();
 
@@ -85,7 +81,7 @@ Vector3 Scene::trace(Ray& ray, float depth) {
 distObject Scene::intersectScene(const Ray& ray) {
     // The base case is that it hits nothing, and travels for `Infinity`
     distObject closest;
-    closest.distance = std::numeric_limits<double>::infinity();
+    closest.distance = std::numeric_limits<float>::infinity();
     closest.object = NULL;
     // But for each object, we check whether it has any intersection,
     // and compare that intersection - is it closer than `Infinity` at first,
@@ -102,7 +98,7 @@ distObject Scene::intersectScene(const Ray& ray) {
 }
 
 bool Scene::isLightVisible(const Vector3 point, const Light light) {
-    Ray ray = Ray(point, (point - light).unitVector());
+    Ray ray = Ray(point, (point - light.getPosition()).unitVector());
     distObject distObject = intersectScene(ray);
     return distObject.distance > -0.005;
 }
