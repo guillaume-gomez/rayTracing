@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "lodepng.h"
 
 #include "Scene.h"
@@ -8,17 +10,27 @@
 
 using namespace std;
 
+Vector3 randomVector() {
+
+    float x = 1 + std::rand()/((RAND_MAX + 1u)/255);
+    float y = 1 + std::rand()/((RAND_MAX + 1u)/255);
+    float z = 1 + std::rand()/((RAND_MAX + 1u)/255);
+    return Vector3(x, y, z);
+}
+
 int main()
 {
+    std::srand(std::time(NULL));
+
     float width = 640.0f;
     float height = 480.0f;
-    Camera camera = Camera(Vector3(0.0f, 1.8f, 10.0f), Vector3(0.0f, 3.0f, 0.0f));
+    Camera camera = Camera(Vector3(0.0f, 0.0f, -3.0f), Vector3(0.0f, 0.0f, 10.0f));
     Light light = Light(Vector3(-30.0f, -10.0f, -20.0f));
 
-    Sphere s1 = Sphere(Vector3(0.0f, 3.5f, -3.0f), Vector3(155.0f, 200.0f, 155.0f), 0.2f, 0.7f, 0.1f, 3.0f);
-    Sphere s2 = Sphere(Vector3(-4.0f, 2.0f, -1.0f), Vector3(155.0f, 155.0f, 155.0f), 0.1f, 0.9f, 0.0f, 0.2f);
-    Sphere s3 = Sphere(Vector3(-4.0f, 3.0f, -1.0f), Vector3(255.0f, 255.0f, 255.0f), 0.2f, 0.7f, 0.1f, 0.1f);
-    Plane p = Plane(Vector3(0.0f, 0.0f, -175.0f), Vector3(0.0f, 10.0f, 155.0f), 0.2f, 0.7f, 0.1f, Vector3(0.0f, 0.0f, -1.0f));
+    Sphere s1 = Sphere(Vector3(0.0f, 0.0f, 10.0f), Vector3(155.0f, 200.0f, 155.0f), 0.2f, 0.7f, 0.1f, 2.0f);
+    Sphere s2 = Sphere(Vector3(-2.0f, 1.0f, 9.0f), Vector3(155.0f, 155.0f, 155.0f), 0.1f, 0.9f, 0.0f, 0.5f);
+    Sphere s3 = Sphere(Vector3(-1.5f, 1.0f, 8.0f), Vector3(10.0f, 255.0f, 255.0f), 0.2f, 0.7f, 0.1f, 0.4f);
+    Plane p = Plane(Vector3(0.0f, 0.0f, 150.0f), randomVector(), 0.2f, 0.7f, 0.1f, Vector3(0.0f, 0.0f, 1.0f));
     Scene scene = Scene(width, height, camera);
     scene.addLight(light);
     scene.addObject(&p);
