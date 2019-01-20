@@ -24,6 +24,10 @@ Vector3 Vector3::operator+(const Vector3& source) {
     return Vector3(x + source.x, y + source.y, z + source.z);
 }
 
+Vector3 Vector3::operator+(const Vector3& source) const {
+    return Vector3(x + source.x, y + source.y, z + source.z);
+}
+
 Vector3& Vector3::operator+=(const Vector3& source) {
     x = x + source.x;
     y = y + source.y;
@@ -47,6 +51,10 @@ Vector3& Vector3::operator-=(const Vector3& source) {
 }
 
 Vector3 Vector3::operator*(const float coeff) {
+    return Vector3(x * coeff, y * coeff, z * coeff);
+}
+
+Vector3 Vector3::operator*(const float coeff) const {
     return Vector3(x * coeff, y * coeff, z * coeff);
 }
 
@@ -105,7 +113,12 @@ Vector3 Vector3::crossProduct(const Vector3 b) {
     );
 }
 
+
 float Vector3::magnitude() {
+    return sqrt(magnitude_sqr());
+}
+
+float Vector3::magnitude() const {
     return sqrt(magnitude_sqr());
 }
 
@@ -113,11 +126,19 @@ float Vector3::magnitude_sqr() {
     return (x * x) + (y * y) + (z * z);
 }
 
-Vector3 Vector3::normalised() {
+float Vector3::magnitude_sqr() const {
+    return (x * x) + (y * y) + (z * z);
+}
+
+Vector3 Vector3::normalized() {
     return Vector3(*this) / magnitude();
 }
 
-Vector3& Vector3::normalise() {
+Vector3 Vector3::normalized() const {
+    return Vector3(*this) / magnitude();
+}
+
+Vector3& Vector3::normalize() {
     (*this) /= magnitude();
     return *this;
 }

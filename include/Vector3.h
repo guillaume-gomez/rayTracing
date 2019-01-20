@@ -18,11 +18,13 @@ class Vector3
         Vector3(const Vector3& copy);
         Vector3& operator=(const Vector3& source);
         Vector3 operator+(const Vector3& source);
+        Vector3 operator+(const Vector3& source) const;
         Vector3& operator+=(const Vector3& source);
         Vector3 operator-(const Vector3& source);
         Vector3 operator-(const Vector3& source) const;
         Vector3& operator-=(const Vector3& source);
         Vector3 operator*(const float coeff);
+        Vector3 operator*(const float coeff) const;
         Vector3& operator*=(const float coeff);
         Vector3 operator/(const float coeff);
         Vector3& operator/=(const float coeff);
@@ -30,9 +32,12 @@ class Vector3
         Vector3 operator^(const Vector3 source);
         Vector3& operator^=(const Vector3 source);
         float magnitude();
+        float magnitude() const;
         float magnitude_sqr();
-        Vector3 normalised();
-        Vector3& normalise();
+        float magnitude_sqr() const;
+        Vector3 normalized();
+        Vector3 normalized() const;
+        Vector3& normalize();
         Vector3 unitVector();
         static  Vector3 crossProduct(const Vector3 a, const Vector3 b);
         Vector3 crossProduct(const Vector3 b);
