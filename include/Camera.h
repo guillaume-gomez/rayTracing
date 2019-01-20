@@ -11,6 +11,7 @@ class Camera
         Camera& operator=(const Camera& source);
         virtual ~Camera();
         Vector3 eyeVector();
+        Vector3 calcDirVec(float x, float y, int xRes, int yRes);
         float getFov() const { return fov; };
         const Vector3& getPoint() const { return point; };
         const Vector3& getLookAt() const { return lookAt; };
@@ -22,7 +23,7 @@ class Camera
         Vector3 lookAt;
         Vector3 up;
         Vector3 right;
-        Vector3 viewPlaneLeft;
+        Vector3 viewPlaneUpLeft;
         float fov;
         float viewPlaneWidth;
         float viewPlaneHeight;
