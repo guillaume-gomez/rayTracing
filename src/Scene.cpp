@@ -10,6 +10,7 @@ Scene::Scene(float _width, float _height, const Camera& _camera)
 : width(_width), height(_height), camera(_camera)
 {
     //ctor
+    camera.computeViewPlane(width, height);
 }
 
 void Scene::addLight(const Light& light) {
