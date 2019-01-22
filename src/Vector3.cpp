@@ -148,6 +148,10 @@ Vector3 Vector3::unitVector() {
     return (*this) * scale;
 }
 
+std::ostream& operator<< (std::ostream& stream, const Vector3& vector) {
+    stream << "{ x: " << vector.x << ", y: " << vector.y << ", z: " << vector.z << " }";
+    return stream;
+}
 
 Vector3::~Vector3()
 {
