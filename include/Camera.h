@@ -11,6 +11,7 @@ class Camera
         Camera& operator=(const Camera& source);
         virtual ~Camera();
         Vector3 eyeVector();
+        void computeViewPlane(float width, float height);
         Vector3 calcDirVec(float x, float y, int xRes, int yRes);
         float getFov() const { return fov; };
         const Vector3& getPoint() const { return point; };
