@@ -10,6 +10,13 @@ Plane::Plane(Vector3 _point, Vector3 _color, float _specular, float _lambert, fl
     type = "Plane";
 }
 
+
+Plane::Plane(const Plane& original)
+: SceneObject(original), normal(original.normal)
+{
+    type = "Plane";
+}
+
 float Plane::intersect(const Ray& ray) const {
     float denom = normal.normalized() * ray.getDirection().normalized();
     if (denom > 1e-6) {

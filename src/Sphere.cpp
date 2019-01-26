@@ -11,6 +11,14 @@ Sphere::Sphere(Vector3 _point, Vector3 _color, float _specular, float _lambert, 
     type = "Sphere";
 }
 
+
+Sphere::Sphere(const Sphere& original)
+: SceneObject(original), radius(original.radius)
+{
+    type = "Sphere";
+}
+
+
 float Sphere::intersect(const Ray& ray) const {
     Vector3 L = point - ray.getOrigin();
     float radius2 = radius * radius;
