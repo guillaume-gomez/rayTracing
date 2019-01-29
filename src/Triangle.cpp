@@ -56,7 +56,7 @@ float Triangle::intersect(const Ray& ray) const {
 
     //edge 2
     Vector3 edge2 = b - a;
-    Vector3 vp2 = Vector3::crossProduct(edge2, vp2);
+    Vector3 vp2 = rayIntersection - a;
     center = Vector3::crossProduct(edge2, vp2);
     if(normal * center < 0) {
         return std::numeric_limits<float>::infinity();
