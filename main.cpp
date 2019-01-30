@@ -7,6 +7,8 @@
 #include "Scene.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Disk.h"
+#include "Triangle.h"
 
 using namespace std;
 
@@ -31,17 +33,21 @@ int main()
     Sphere s2 = Sphere(Vector3(-2.0f, 1.0f, 9.0f), Vector3(155.0f, 155.0f, 155.0f), 0.1f, 0.9f, 0.0f, 1.0f);
     Sphere s3 = Sphere(Vector3(-1.5f, 2.0f, 7.0f), Vector3(10.0f, 255.0f, 255.0f), 0.2f, 0.7f, 0.1f, 1.0f);
     Plane p = Plane(Vector3(0.0f, 0.0f, 13.0f), randomVector(), 0.2f, 0.7f, 0.1f, Vector3(0.0f, 0.0f, 1.0f));
+    Disk d = Disk(Vector3(0.0f, 0.0f, 15.0f), randomVector(), 0.5f, 0.8f, 0.2f, Vector3(0.0f, 0.0f, 1.0f), 2.0f);
+    Triangle t = Triangle(Vector3(0.0f, 0.0f, 0.0f), randomVector(), 0.5f, 0.8f, 0.2f, Vector3(-2.0f, 1.5f, 40.0f), Vector3(-0.f, 1.5f, 40.0f), Vector3(-1.0f, 10.0f, 40.0f));
     Scene scene = Scene(width, height, camera);
-    scene.addLight(light);
-    scene.addObject(&p);
-    scene.addObject(&s1);
 
+    scene.addLight(light);
+    
+    //scene.addObject(&p);
+    scene.addObject(&d);
+    scene.addObject(&t);
+    scene.addObject(&s1);
     scene.addObject(&s2);
     scene.addObject(&s3);
 
-
     std::vector<unsigned char> image = scene.render();
-    std::string filename = "output1.png";
+    std::string filename = "output13.png";
     unsigned error = lodepng::encode(filename, image, width, height);
     if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 
