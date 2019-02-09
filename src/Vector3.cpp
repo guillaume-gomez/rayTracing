@@ -80,6 +80,10 @@ float Vector3::operator*(const Vector3 source) {
     return (x * source.x) + (y * source.y) + (z * source.z);
 }
 
+float Vector3::operator*(const Vector3 source) const {
+    return (x * source.x) + (y * source.y) + (z * source.z);
+}
+
 Vector3 Vector3::operator^(const Vector3 source) {
     float nx = y * source.z - source.y * z;
     float ny = z * source.x - source.z * x;
