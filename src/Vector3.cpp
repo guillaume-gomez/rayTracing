@@ -157,6 +157,11 @@ std::ostream& operator<< (std::ostream& stream, const Vector3& vector) {
     return stream;
 }
 
+
+Vector3 Vector3::inverse() const {
+    return Vector3(1.0f / x, 1.0f / y, 1.0f / z);
+}
+
 Vector3::~Vector3()
 {
     //dtor
