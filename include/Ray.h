@@ -12,6 +12,8 @@ class Ray
         virtual ~Ray();
         const Vector3& getOrigin() const { return origin; };
         const Vector3& getDirection() const { return direction; };
+        const Vector3& getInverseDirection() const { return  inverseDirection; };
+        const int* getSign() const { return sign; };
         void setOrigin(Vector3 _origin ) { origin = _origin; };
         void setDirection(Vector3 _direction) { direction = _direction; };
     protected:
