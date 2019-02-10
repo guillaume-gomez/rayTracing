@@ -17,6 +17,8 @@ class Ray
     protected:
         Vector3 origin;
         Vector3 direction;
+        Vector3 inverseDirection;
+        int sign[3];
 };
 
 #endif // RAY_H
