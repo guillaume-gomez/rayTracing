@@ -12,8 +12,7 @@ class Box : public SceneObject
         float intersect(const Ray& ray) const;
         virtual Vector3 computeNormal(const Vector3& pos) const;
     protected:
-        Vector3 vmin;
-        Vector3 vmax;
+        Vector3[2] bounds;
 };
 
 #endif // Box_H
