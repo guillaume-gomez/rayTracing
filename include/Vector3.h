@@ -45,6 +45,7 @@ class Vector3
         static  Vector3 crossProduct(const Vector3 a, const Vector3 b);
         Vector3 crossProduct(const Vector3 b);
         virtual ~Vector3();
+        friend Vector3 operator/(const float r, const Vector3 &v);
         friend std::ostream& operator<<(std::ostream& stream, const Vector3& vector);
     protected:
     private:

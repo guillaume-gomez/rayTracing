@@ -157,6 +157,10 @@ std::ostream& operator<< (std::ostream& stream, const Vector3& vector) {
     return stream;
 }
 
+Vector3 operator/ (const float r, const Vector3 &v) {
+    return Vector3(r / v.x, r / v.y, r / v.z);
+}
+
 
 Vector3 Vector3::inverse() const {
     return Vector3(1.0f / x, 1.0f / y, 1.0f / z);
