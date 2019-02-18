@@ -15,8 +15,9 @@ class Ray
         const Vector3& getInverseDirection() const { return  inverseDirection; };
         const int* getSign() const { return sign; };
         void setOrigin(Vector3 _origin ) { origin = _origin; };
-        void setDirection(Vector3 _direction) { direction = _direction; };
+        void setDirection(Vector3 _direction);
     protected:
+        void computeInverseDirection();
         Vector3 origin;
         Vector3 direction;
         Vector3 inverseDirection;
