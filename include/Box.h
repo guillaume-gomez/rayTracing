@@ -10,7 +10,7 @@ class Box : public SceneObject
         Box(const Box& original);
         virtual ~Box();
         float intersect(const Ray& ray) const;
-        virtual Vector3 computeNormal(const Vector3& pos) const;
+        Vector3 computeNormal(const Vector3& pos) const;
     protected:
         Vector3 bounds[2];
 };

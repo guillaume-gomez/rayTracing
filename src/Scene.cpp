@@ -48,8 +48,6 @@ std::vector<unsigned char> Scene::render() {
             }
 
             Vector3 rayDirection = camera.calcDirVec(float(x), float(y), width, height); //(eyeVector + xcomp + ycomp).unitVector();
-            //std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z << std::endl;
-
             ray.setDirection(rayDirection);
 
             // use the vector generated to raytrace the scene, returning a color
@@ -90,7 +88,7 @@ distObject Scene::intersectScene(const Ray& ray) {
     for (unsigned int i = 0; i < objects.size(); i++) {
         const SceneObject* object = objects[i];
         float dist = object->intersect(ray);
-        if (dist != NULL && dist < closest.distance) {
+        if (dist != 0 && dist < closest.distance) {
             closest.distance = dist;
             closest.object   = object;
         }
