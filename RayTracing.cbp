@@ -32,8 +32,11 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-fexceptions" />
+			<Add option="-fexceptions  `pkg-config --cflags gtk+-2.0`" />
 		</Compiler>
+		<Linker>
+			<Add option="`pkg-config --libs gtk+-2.0`" />
+		</Linker>
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/Disk.h" />
 		<Unit filename="include/Light.h" />
