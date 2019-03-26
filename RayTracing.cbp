@@ -37,6 +37,7 @@
 		<Linker>
 			<Add option="`pkg-config --libs gtk+-2.0`" />
 		</Linker>
+		<Unit filename="include/Box.h" />
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/Disk.h" />
 		<Unit filename="include/Light.h" />
@@ -49,6 +50,7 @@
 		<Unit filename="include/Vector3.h" />
 		<Unit filename="include/lodepng.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Box.cpp" />
 		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/Disk.cpp" />
 		<Unit filename="src/Light.cpp" />
