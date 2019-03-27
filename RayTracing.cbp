@@ -35,7 +35,7 @@
 			<Add option="-fexceptions  `pkg-config --cflags gtk+-2.0`" />
 		</Compiler>
 		<Linker>
-			<Add option="`pkg-config --libs gtk+-2.0`" />
+			<Add option="-lSDL2" />
 		</Linker>
 		<Unit filename="include/Box.h" />
 		<Unit filename="include/Camera.h" />
