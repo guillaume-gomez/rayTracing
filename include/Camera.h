@@ -19,6 +19,8 @@ class Camera
         const Vector3& getForward() const { return forward; };
         const Vector3& getUp() const { return up; };
         const Vector3& getRight() const { return right; };
+        void moveTo(const Vector3& newPosition);
+        void move(const Vector3& offset);
      private:
         Vector3 point;
         Vector3 lookAt;

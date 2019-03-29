@@ -57,6 +57,15 @@ Camera& Camera::operator=(const Camera& source) {
     return *this;
 }
 
+void Camera::moveTo(const Vector3& newPosition) {
+    point = newPosition;
+
+}
+
+void Camera::move(const Vector3& offset) {
+    point += offset;
+}
+
 Vector3 Camera::eyeVector() {
     forward = lookAt - point;
     return forward.unitVector();
