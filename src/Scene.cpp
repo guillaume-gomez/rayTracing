@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Scene::Scene(float _width, float _height, const Camera& _camera)
+Scene::Scene(float _width, float _height, Camera& _camera)
 : width(_width), height(_height), camera(_camera)
 {
     //ctor
@@ -27,6 +27,7 @@ std::vector<unsigned char> Scene::render() {
 
     std::vector<unsigned char> image;
     image.resize(width * height * 4);
+    std::cout << camera.getPoint() << std::endl;
     for (unsigned int x = 0; x < width; x++) {
         for (unsigned int y = 0; y < height; y++) {
 
