@@ -15,7 +15,7 @@ struct distObject {
 class Scene
 {
     public:
-        Scene(float width, float height, const Camera& camera);
+        Scene(float width, float height, Camera& camera);
         void addLight(const Light& light);
         void addObject(const SceneObject* object);
         std::vector<unsigned char> render();
@@ -26,7 +26,7 @@ class Scene
     private:
         float width;
         float height;
-        Camera camera;
+        Camera& camera;
         std::vector<Light> lights;
         std::vector<const SceneObject*> objects;
 
