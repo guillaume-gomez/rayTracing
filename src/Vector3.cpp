@@ -101,6 +101,14 @@ Vector3& Vector3::operator^=(const Vector3 source) {
     return *this;
 }
 
+bool operator==(const Vector3& lhs, const Vector3& rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+}
+
+bool operator!=(const Vector3& lhs, const Vector3& rhs) {
+    return !(lhs == rhs);
+}
+
 Vector3 Vector3::crossProduct(const Vector3 a, const Vector3 b) {
     return Vector3(
         (a.y * b.z) - (a.z * b.y),

@@ -47,6 +47,8 @@ class Vector3
         virtual ~Vector3();
         friend Vector3 operator/(const float r, const Vector3 &v);
         friend std::ostream& operator<<(std::ostream& stream, const Vector3& vector);
+        friend bool operator==(const Vector3& lhs, const Vector3& rhs);
+        friend bool operator!=(const Vector3& lhs, const Vector3& rhs);
     protected:
     private:
 };
