@@ -59,11 +59,18 @@ Camera& Camera::operator=(const Camera& source) {
 
 void Camera::moveTo(const Vector3& newPosition) {
     point = newPosition;
+    if(point != newPosition) {
+         notify("camera moved");
+    }
 
 }
 
 void Camera::move(const Vector3& offset) {
+    if(offset.x == 0.f && offset.y == 0.f && offset.z == 0.f){
+        return;
+    }
     point += offset;
+    notify("camera moved");
 }
 
 Vector3 Camera::eyeVector() {

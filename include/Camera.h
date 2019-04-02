@@ -2,8 +2,9 @@
 #define CAMERA_H
 
 #include "Vector3.h"
+#include "Observable.h"
 
-class Camera
+class Camera : public Observable
 {
     public:
         Camera(Vector3 point = Vector3(), Vector3 lookAt = Vector3(), float fov = 45.0f);
