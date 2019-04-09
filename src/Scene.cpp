@@ -7,10 +7,12 @@
 #include <iostream>
 
 Scene::Scene(float _width, float _height, Camera& _camera)
-: width(_width), height(_height), camera(_camera)
+: width(_width), height(_height), camera(_camera), needUpdate(true)
 {
-    //ctor
     camera.computeViewPlane(width, height);
+    camera.addObserver(this);
+
+    image.resize(width * height * 4);
 }
 
 void Scene::addLight(const Light& light) {
@@ -22,11 +24,12 @@ void Scene::addObject(const SceneObject* object) {
 }
 
 std::vector<unsigned char> Scene::render() {
+    if(!needUpdate) {
+        return image;
+    }
+
     unsigned int index, color;
     Ray ray = Ray(camera.getPoint());
-
-    std::vector<unsigned char> image;
-    image.resize(width * height * 4);
     std::cout << camera.getPoint() << std::endl;
     for (unsigned int x = 0; x < width; x++) {
         for (unsigned int y = 0; y < height; y++) {
@@ -86,7 +89,7 @@ distObject Scene::intersectScene(const Ray& ray) {
     // But for each object, we check whether it has any intersection,
     // and compare that intersection - is it closer than `Infinity` at first,
     // and then is it closer than other objects that have been hit?
-    for (unsigned int i = 0; i < objects.size(); i++) {
+    for (unsigned int i = 0; i < objects.size(); ++i) {
         const SceneObject* object = objects[i];
         float dist = object->intersect(ray);
         if (dist != 0 && dist < closest.distance) {
@@ -101,6 +104,11 @@ bool Scene::isLightVisible(const Vector3 point, const Light light) {
     Ray ray = Ray(point, (point - light.getPosition()).unitVector());
     distObject distObject = intersectScene(ray);
     return distObject.distance > -0.005;
+}
+
+void Scene::update(std::string data) {
+    std::cout << "message ->" << data << std::endl;
+    needUpdate = true;
 }
 
 Scene::~Scene()
