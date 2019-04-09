@@ -89,12 +89,11 @@ distObject Scene::intersectScene(const Ray& ray) {
     // But for each object, we check whether it has any intersection,
     // and compare that intersection - is it closer than `Infinity` at first,
     // and then is it closer than other objects that have been hit?
-    for (unsigned int i = 0; i < objects.size(); ++i) {
-        const SceneObject* object = objects[i];
-        float dist = object->intersect(ray);
+    for (std::vector<const SceneObject*>::iterator object = objects.begin(); object != objects.end(); ++object) {
+        float dist = (*object)->intersect(ray);
         if (dist != 0 && dist < closest.distance) {
             closest.distance = dist;
-            closest.object   = object;
+            closest.object   = *object;
         }
     }
     return closest;
