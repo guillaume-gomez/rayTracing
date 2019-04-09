@@ -2,6 +2,9 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include "lodepng.h"
 
 #include "Scene.h"
@@ -10,6 +13,7 @@
 #include "Disk.h"
 #include "Triangle.h"
 #include "Box.h"
+#include "Window.h"
 
 using namespace std;
 
@@ -20,6 +24,20 @@ Vector3 randomVector() {
     float z = 1 + std::rand()/((RAND_MAX + 1u)/255);
     return Vector3(x, y, z);
 }
+
+void updateBuffer(Scene &scene, sf::Texture& texture) {
+    std::vector<unsigned char> image = scene.render();
+    sf::Uint8 *pixels = new sf::Uint8[image.size()];
+
+    for(register int i = 0; i < image.size(); i += 4) {
+        pixels[i] = image[i];
+        pixels[i + 1] = image[i + 1];
+        pixels[i + 2] = image[i + 2];
+        pixels[i + 3] = image[i + 3];
+    }
+    texture.update(pixels);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -51,10 +69,16 @@ int main(int argc, char *argv[])
     scene.addObject(&b);
 
     std::vector<unsigned char> image = scene.render();
-    std::string filename = argc >= 2 && argv[1] ? std::string(argv[1]) : "output1.png";
+    std::string filename = (argc >= 2 && argv[1]) ? std::string(argv[1]) : "output1.png";
 
     unsigned error = lodepng::encode(filename, image, width, height);
     if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
+
+
+    if(argc >= 3 && argv[2]) {
+       Window window = Window(scene);
+       window.display();
+    }
 
     return 0;
 }
