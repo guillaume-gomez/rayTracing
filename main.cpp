@@ -25,20 +25,6 @@ Vector3 randomVector() {
     return Vector3(x, y, z);
 }
 
-void updateBuffer(Scene &scene, sf::Texture& texture) {
-    std::vector<unsigned char> image = scene.render();
-    sf::Uint8 *pixels = new sf::Uint8[image.size()];
-
-    for(register int i = 0; i < image.size(); i += 4) {
-        pixels[i] = image[i];
-        pixels[i + 1] = image[i + 1];
-        pixels[i + 2] = image[i + 2];
-        pixels[i + 3] = image[i + 3];
-    }
-    texture.update(pixels);
-}
-
-
 int main(int argc, char *argv[])
 {
     std::srand(std::time(NULL));
