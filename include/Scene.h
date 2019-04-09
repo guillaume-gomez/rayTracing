@@ -12,7 +12,7 @@ struct distObject {
     const SceneObject* object;
 };
 
-class Scene
+class Scene : public IObserver
 {
     public:
         Scene(float width, float height, Camera& camera);
@@ -22,16 +22,22 @@ class Scene
         distObject intersectScene(const Ray& ray);
         const float getWidth() const { return width; };
         const float getHeight() const { return height; };
+        Camera& getCamera() { return camera; };
+        const bool IsneededUpdate() { return needUpdate; };
         virtual ~Scene();
+        void update(std::string data);
     private:
         float width;
         float height;
+        bool needUpdate;
         Camera& camera;
         std::vector<Light> lights;
         std::vector<const SceneObject*> objects;
+        std::vector<unsigned char> image;
 
-        Vector3 trace(Ray& ray, float depth);
+        Vector3 trace(Ray& ray, int depth);
         bool isLightVisible(const Vector3 point, const Light light);
+        Vector3 surface(Ray& ray, SceneObject& object, Vector3& pointAtTime, Vector3& normal, int depth);
 };
 
 #endif // SCENE_H
