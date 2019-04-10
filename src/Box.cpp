@@ -53,7 +53,7 @@ float Box::intersect(const Ray& ray) const {
     return tmax;
 }
 
-Vector3 Box::computeNormal(const Vector3& pos) const {
+const Vector3 Box::computeNormal(const Vector3& pos) const {
     return Vector3(0.0f, 0.0f, 0.0f);
 }
 

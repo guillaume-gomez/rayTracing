@@ -49,7 +49,7 @@ float Sphere::intersect(const Ray& ray) const {
     return t;
 }
 
-Vector3 Sphere::computeNormal(const Vector3& pos) const {
+const Vector3 Sphere::computeNormal(const Vector3& pos) const {
     return (pos - point).unitVector();
 }
 

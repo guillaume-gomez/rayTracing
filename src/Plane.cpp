@@ -26,7 +26,7 @@ float Plane::intersect(const Ray& ray) const {
     return std::numeric_limits<float>::infinity();
 }
 
-Vector3 Plane::computeNormal(const Vector3& pos) const {
+const Vector3 Plane::computeNormal(const Vector3& pos) const {
     return 0.0f;
 }
 

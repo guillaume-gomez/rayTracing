@@ -65,7 +65,7 @@ float Triangle::intersect(const Ray& ray) const {
     return t;
 }
 
-Vector3 Triangle::computeNormal(const Vector3& pos) const {
+const Vector3 Triangle::computeNormal(const Vector3& pos) const {
     return 0.0f;
 }
 
