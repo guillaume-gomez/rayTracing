@@ -12,7 +12,7 @@ class SceneObject
         SceneObject(Vector3 point = Vector3(), Vector3 color = Vector3(), float specular = 0.0f, float lambert = 0.0f, float ambiant = 0.0f);
         SceneObject(const SceneObject& original);
         virtual float intersect(const Ray& ray) const = 0;
-        virtual Vector3 computeNormal(const Vector3& pos) const = 0;
+        virtual const Vector3 computeNormal(const Vector3& pos) const = 0;
         virtual ~SceneObject();
         const Vector3 getColor() const { return color; };
         const Vector3 getPoint() const { return point; };

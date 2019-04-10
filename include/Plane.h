@@ -10,7 +10,7 @@ class Plane : public SceneObject
         Plane(const Plane& original);
         virtual ~Plane();
         float intersect(const Ray& ray) const;
-        Vector3 computeNormal(const Vector3& pos) const;
+        const Vector3 computeNormal(const Vector3& pos) const;
     protected:
         Vector3 normal;
 };

@@ -43,6 +43,8 @@ class Vector3
         Vector3 unitVector();
         Vector3 inverse() const;
         static Vector3 crossProduct(const Vector3 a, const Vector3 b);
+        static Vector3 add3(const Vector3& a, const Vector3& b, const Vector3& c);
+        static Vector3 reflectThrough(const Vector3& a, const Vector3& normal);
         Vector3 crossProduct(const Vector3 b);
         virtual ~Vector3();
         friend Vector3 operator/(const float r, const Vector3 &v);
