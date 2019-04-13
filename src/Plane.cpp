@@ -8,6 +8,7 @@ Plane::Plane(Vector3 _point, Vector3 _color, float _specular, float _lambert, fl
 {
     //ctor
     type = "Plane";
+    normal = normal.unitVector();
 }
 
 
@@ -15,6 +16,7 @@ Plane::Plane(const Plane& original)
 : SceneObject(original), normal(original.normal)
 {
     type = "Plane";
+    normal = normal.unitVector();
 }
 
 float Plane::intersect(const Ray& ray) const {
@@ -27,7 +29,7 @@ float Plane::intersect(const Ray& ray) const {
 }
 
 const Vector3 Plane::computeNormal(const Vector3& pos) const {
-    return 0.0f;
+    return normal;
 }
 
 
