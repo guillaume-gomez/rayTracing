@@ -25,6 +25,7 @@ class Scene : public IObserver
         Camera& getCamera() { return camera; };
         const bool IsneededUpdate() { return needUpdate; };
         virtual ~Scene();
+        const Vector3 backgroundColor() const { return Vector3(255.0f, 100.0f, 100.0F);};
         void update(std::string data);
     private:
         float width;
@@ -37,7 +38,7 @@ class Scene : public IObserver
 
         Vector3 trace(Ray& ray, int depth);
         bool isLightVisible(const Vector3 point, const Light light);
-        Vector3 surface(Ray& ray, SceneObject& object, Vector3& pointAtTime, Vector3& normal, int depth);
+        Vector3 surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime, const Vector3 normal, int depth);
 };
 
 #endif // SCENE_H

@@ -64,21 +64,86 @@ std::vector<unsigned char> Scene::render() {
             image[index + 3] = 255;
         }
     }
+    needUpdate = false;
     return image;
 }
 
-Vector3 Scene::trace(Ray& ray, float depth) {
-    if (depth > 3) {
-        return Vector3(255.f, 255.f, 255.5f);
+Vector3 Scene::surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime, const Vector3 normal, int depth) {
+    Vector3 zero = Vector3();
+    Vector3 objectColor = object->getColor();
+    float lambertAmount = 0;
+
+    // **[Lambert shading](http://en.wikipedia.org/wiki/Lambertian_reflectance)**
+    // is our pretty shading, which shows gradations from the most lit point on
+    // the object to the least.
+    if (object->getLambert()) {
+        for (std::vector<Light>::iterator light = lights.begin(); light != lights.end(); ++light) {
+            Vector3 lightPoint = light->getPosition();
+            // First: can we see the light? If not, this is a shadowy area
+            // and it gets no light from the lambert shading process.
+            if (!isLightVisible(pointAtTime, lightPoint)) {
+                continue;
+            }
+            // Otherwise, calculate the lambertian reflectance, which
+            // essentially is a 'diffuse' lighting system - direct light
+            // is bright, and from there, less direct light is gradually,
+            // beautifully, less light.
+            float contribution = (lightPoint - pointAtTime).unitVector() * normal;
+            // sometimes this formula can return negatives, so we check:
+            // we only want positive values for lighting.
+            if (contribution > 0) {
+                lambertAmount += contribution;
+            }
+        }
+    }
+
+    // **[Specular](https://en.wikipedia.org/wiki/Specular_reflection)** is a fancy word for 'reflective': rays that hit objects
+    // with specular surfaces bounce off and acquire the colors of other objects
+    // they bounce into.
+    if (object->getSpecular()) {
+        // This is basically the same thing as what we did in `render()`, just
+        // instead of looking from the viewpoint of the camera, we're looking
+        // from a point on the surface of a shiny object, seeing what it sees
+        // and making that part of a reflection.
+        Ray reflectedRay = Ray(pointAtTime, Vector3::reflectThrough(ray.getDirection(), normal));
+        Vector3 reflectedColor = trace(reflectedRay, ++depth);
+        if (reflectedColor != Vector3(255.f, 255.f, 255.f)) {
+            Vector3 specularVector = reflectedColor * object->getSpecular();
+            zero = zero + specularVector;
+        }
+    }
+
+    // lambert should never 'blow out' the lighting of an object,
+    // even if the ray bounces between a lot of things and hits lights
+    lambertAmount = fmin(1, lambertAmount);
+
+    // **Ambient** colors shine bright regardless of whether there's a light visible -
+    // a circle with a totally ambient blue color will always just be a flat blue
+    // circle.
+    return Vector3::add3(zero, object->getColor() * lambertAmount * object->getLambert(), object->getColor() * object->getAmbiant());
+}
+
+Vector3 Scene::trace(Ray& ray, int depth) {
+    if (depth > 2) {
+        return Vector3(255.f, 255.f, 255.f);
     }
 
     distObject distObject = intersectScene(ray);
-    if(distObject.object == NULL) {
-        return Vector3(255.f, 100.0f, 100.f);
+    const SceneObject* object = distObject.object;
+    if(object == NULL) {
+        return backgroundColor();
     }
-    return distObject.object->getColor();
+    // The `pointAtTime` is another way of saying the 'intersection point'
+    // of this ray into this object. We compute this by simply taking
+    // the direction of the ray and making it as long as the distance
+    // returned by the intersection check.
+    Vector3 pointAtTime = ray.getOrigin() + (ray.getDirection() * distObject.distance);
 
-    // return Vector3(255.f, 0.0f, 200.f);
+
+    return surface(ray, object, pointAtTime, object->computeNormal(pointAtTime), depth);
+
+    //return distObject.object->getColor();
+
 }
 
 distObject Scene::intersectScene(const Ray& ray) {
