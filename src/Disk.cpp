@@ -35,7 +35,7 @@ float Disk::intersect(const Ray& ray) const {
 }
 
 const Vector3 Disk::computeNormal(const Vector3& pos) const {
-    return 0.0f;
+    return normal;
 }
 
 
