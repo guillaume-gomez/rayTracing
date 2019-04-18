@@ -35,6 +35,14 @@ Vector3& Vector3::operator+=(const Vector3& source) {
     return *this;
 }
 
+Vector3 Vector3::add3(const Vector3& a, const Vector3& b, const Vector3& c) {
+    return Vector3(
+        a.x + b.x + c.x,
+        a.y + b.y + c.y,
+        a.z + b.z + c.z
+    );
+};
+
 Vector3 Vector3::operator-(const Vector3& source) {
     return Vector3(x - source.x, y - source.y, z - source.z);
 }
@@ -172,6 +180,17 @@ Vector3 operator/ (const float r, const Vector3 &v) {
 
 Vector3 Vector3::inverse() const {
     return Vector3(1.0f / x, 1.0f / y, 1.0f / z);
+}
+
+
+// Given a vector `a`, which is a point in space, and a `normal`, which is
+// the angle the point hits a surface, returna  new vector that is reflect
+// off of that surface
+Vector3 Vector3::reflectThrough(const Vector3& a, const Vector3& normal) {
+    float dotProductANormal = normal * a;
+    Vector3 distance = normal * dotProductANormal;
+    Vector3 distanceTwo = distance * 2;
+    return distanceTwo - a;
 }
 
 Vector3::~Vector3()
