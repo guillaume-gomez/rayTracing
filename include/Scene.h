@@ -15,7 +15,7 @@ struct distObject {
 class Scene : public IObserver
 {
     public:
-        Scene(float width, float height, Camera& camera);
+        Scene(float width, float height, Camera& camera, float level);
         void addLight(const Light& light);
         void addObject(const SceneObject* object);
         std::vector<unsigned char> render();
@@ -35,6 +35,7 @@ class Scene : public IObserver
         std::vector<Light> lights;
         std::vector<const SceneObject*> objects;
         std::vector<unsigned char> image;
+        float level;
 
         Vector3 trace(Ray& ray, int depth);
         bool isLightVisible(const Vector3 point, const Light light);
