@@ -35,7 +35,7 @@ Vector3 Camera::calcDirVec(float x, float y, int width, int height) {
     yIndent = viewPlaneHeight / (float) height;
 
     Vector3 raydir = (viewPlaneUpLeft + right * xIndent * x - up * yIndent * y) - point;
-    return raydir.unitVector();
+    return raydir.normalize();
 
 }
 
