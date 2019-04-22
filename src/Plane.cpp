@@ -8,7 +8,7 @@ Plane::Plane(Vector3 _point, Color _color, float _specular, float _lambert, floa
 {
     //ctor
     type = "Plane";
-    normal = normal.unitVector();
+    normal = normal.normalized();
 }
 
 
@@ -20,12 +20,18 @@ Plane::Plane(const Plane& original)
 }
 
 float Plane::intersect(const Ray& ray) const {
-    float denom = normal.normalized() * ray.getDirection().normalized();
-    if (denom > 1e-6) {
-        Vector3 p0l0 = point - ray.getOrigin();
-        return (p0l0 * normal) / denom;
+    float dv = normal.normalized() * ray.getDirection().normalized();
+    if (dv == 0) {
+        return std::numeric_limits<float>::infinity();
     }
-    return std::numeric_limits<float>::infinity();
+
+    Vector3 p0l0 = point - ray.getOrigin();
+    float t = ((normal.normalized() * p0l0) / dv );
+
+    if (t<0) {
+        return std::numeric_limits<float>::infinity();
+    }
+    return t;
 }
 
 const Vector3 Plane::computeNormal(const Vector3& pos) const {
