@@ -205,7 +205,7 @@ distObject Scene::intersectScene(const Ray& ray) {
     return closest;
 }
 
-Vector3 Scene::getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light) {
+Color Scene::getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light) {
     Vector3 normal = object->computeNormal(intersectionPoint);
     Vector3 lightVector = Vector3(intersectionPoint - light.getPosition()).normalize();
     Vector3 invertLightVector = Vector3(-lightVector.x, -lightVector.y, - lightVector.z);
@@ -213,9 +213,11 @@ Vector3 Scene::getLightAt(const Vector3& intersectionPoint, const SceneObject* o
     if(angle <= 0) {
         return backgroundColor();
     }
-    const Vector3 objectColor = object->getColor();
-    const Vector3 lightColor = light.getColor();
-    return Vector3(objectColor.x * lightColor.x, objectColor.y * lightColor.y, objectColor.z * lightColor.z) * angle;
+    const Color objectColor = object->getColor();
+    const Color lightColor = light.getColor();
+    const Color mixColor = Color(Vector3(objectColor.x * lightColor.x, objectColor.y * lightColor.y, objectColor.z * lightColor.z));
+    //std::cout << (objectColor.x * lightColor.x, objectColor.y * lightColor.y, objectColor.z * lightColor.z) << std::endl;
+    return mixColor * angle;
 }
 
 bool Scene::isLightVisible(const Vector3 point, const Light light) {
