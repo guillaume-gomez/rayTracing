@@ -15,7 +15,7 @@ struct distObject {
 class Scene : public IObserver
 {
     public:
-        Scene(float width, float height, Camera& camera, float level);
+        Scene(float width, float height, Camera& camera, int level);
         void addLight(const Light& light);
         void addObject(const SceneObject* object);
         std::vector<unsigned char> render();
@@ -25,7 +25,7 @@ class Scene : public IObserver
         Camera& getCamera() { return camera; };
         const bool IsneededUpdate() { return needUpdate; };
         virtual ~Scene();
-        const Vector3 backgroundColor() const { return Vector3(255.0f, 100.0f, 100.0F);};
+        const Vector3 backgroundColor() const { return Vector3(0.0f, 0.0f, 0.0f);};
         void update(std::string data);
     private:
         float width;
@@ -35,11 +35,12 @@ class Scene : public IObserver
         std::vector<Light> lights;
         std::vector<const SceneObject*> objects;
         std::vector<unsigned char> image;
-        float level;
+        int level;
 
         Vector3 trace(Ray& ray, int depth);
         bool isLightVisible(const Vector3 point, const Light light);
         Vector3 surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime, const Vector3 normal, int depth);
+        Vector3 getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light);
 };
 
 #endif // SCENE_H

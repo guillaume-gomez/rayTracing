@@ -1,13 +1,13 @@
 #include "Ray.h"
 #include "Scene.h"
 
-#include <math.h>
+#include <cmath>
 #include <limits>
 
 #include <iostream>
 
-Scene::Scene(float _width, float _height, Camera& _camera)
-: width(_width), height(_height), camera(_camera), needUpdate(true)
+Scene::Scene(float _width, float _height, Camera& _camera, int _level)
+: width(_width), height(_height), camera(_camera), needUpdate(true), level(_level)
 {
     camera.computeViewPlane(width, height);
     camera.addObserver(this);
@@ -30,7 +30,6 @@ std::vector<unsigned char> Scene::render() {
 
     unsigned int index, color;
     Ray ray = Ray(camera.getPoint());
-    std::cout << camera.getPoint() << std::endl;
     for (unsigned int x = 0; x < width; x++) {
         for (unsigned int y = 0; y < height; y++) {
 
@@ -123,26 +122,68 @@ Vector3 Scene::surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime
     return Vector3::add3(zero, object->getColor() * lambertAmount * object->getLambert(), object->getColor() * object->getAmbiant());
 }
 
-Vector3 Scene::trace(Ray& ray, int depth) {
-    if (depth > 2) {
-        return Vector3(255.f, 255.f, 255.f);
-    }
 
-    distObject distObject = intersectScene(ray);
-    const SceneObject* object = distObject.object;
-    if(object == NULL) {
+// Vector3 Scene::trace(Ray& ray, int depth) {
+//     if (depth > level) {
+//         return Vector3(255.f, 255.f, 255.f);
+//     }
+
+//     distObject distObject = intersectScene(ray);
+//     const SceneObject* object = distObject.object;
+//     if(object == NULL) {
+//         return backgroundColor();
+//     }
+//     // The `pointAtTime` is another way of saying the 'intersection point'
+//     // of this ray into this object. We compute this by simply taking
+//     // the direction of the ray and making it as long as the distance
+//     // returned by the intersection check.
+//     Vector3 pointAtTime = ray.getOrigin() + (ray.getDirection() * distObject.distance);
+
+
+//     return surface(ray, object, pointAtTime, object->computeNormal(pointAtTime), depth);
+
+//     //return distObject.object->getColor();
+
+// }
+
+Vector3 Scene::trace(Ray& viewRay, int depth) {
+    Vector3 finalColor = backgroundColor();
+
+    distObject distObject1 = intersectScene(viewRay);
+    const SceneObject* object1 = distObject1.object;
+
+    if(object1 == NULL) {
         return backgroundColor();
     }
-    // The `pointAtTime` is another way of saying the 'intersection point'
-    // of this ray into this object. We compute this by simply taking
-    // the direction of the ray and making it as long as the distance
-    // returned by the intersection check.
-    Vector3 pointAtTime = ray.getOrigin() + (ray.getDirection() * distObject.distance);
 
+    bool lightBlocked = false;
+    for (std::vector<Light>::iterator light = lights.begin(); light != lights.end(); ++light) {
+        lightBlocked = false;
+        Vector3 intersectObject = viewRay.getOrigin() + (viewRay.getDirection() * distObject1.distance);
+        Vector3 lightVec = intersectObject - light->getPosition();
+        float lightToObjDist = lightVec.magnitude();
+        lightVec.normalize();
 
-    return surface(ray, object, pointAtTime, object->computeNormal(pointAtTime), depth);
+        Ray lightRay = Ray(light->getPosition(), lightVec);
 
-    //return distObject.object->getColor();
+        distObject distObject2 = intersectScene(lightRay);
+        const SceneObject* object2 = distObject2.object;
+
+        if(object1 != object2) {
+            Vector3 intersectionLight = lightRay.getOrigin() + (lightRay.getDirection() * distObject2.distance);
+            Vector3 lightToInterVec = intersectionLight - light->getPosition();
+            float lightToInterDist = lightToInterVec.magnitude();
+            if(lightToInterDist < lightToObjDist) {
+                lightBlocked = true;
+            }
+        }
+
+        if(!lightBlocked) {
+            finalColor += getLightAt(intersectObject, object1, *light);
+        }
+    }
+
+    return Vector3(std::min(finalColor.x, 255.0f), std::min(finalColor.y, 255.0f), std::min(finalColor.z, 255.0f));
 
 }
 
@@ -162,6 +203,19 @@ distObject Scene::intersectScene(const Ray& ray) {
         }
     }
     return closest;
+}
+
+Vector3 Scene::getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light) {
+    Vector3 normal = object->computeNormal(intersectionPoint);
+    Vector3 lightVector = Vector3(intersectionPoint - light.getPosition()).normalize();
+    Vector3 invertLightVector = Vector3(-lightVector.x, -lightVector.y, - lightVector.z);
+    float angle = normal * invertLightVector;
+    if(angle <= 0) {
+        return backgroundColor();
+    }
+    const Vector3 objectColor = object->getColor();
+    const Vector3 lightColor = light.getColor();
+    return Vector3(objectColor.x * lightColor.x, objectColor.y * lightColor.y, objectColor.z * lightColor.z) * angle;
 }
 
 bool Scene::isLightVisible(const Vector3 point, const Light light) {
