@@ -7,6 +7,7 @@ Light::Light(const Vector3 _position, const Vector3 _color, float _intensity)
     //ctor
 }
 
+
 Light::~Light()
 {
     //dtor
