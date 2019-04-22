@@ -4,7 +4,7 @@
 #include <limits>
 #include <iostream>
 
-Box::Box(Vector3 _point, Vector3 _color, float _specular, float _lambert, float _ambiant, Vector3 _vmin, Vector3 _vmax)
+Box::Box(Vector3 _point, Color _color, float _specular, float _lambert, float _ambiant, Vector3 _vmin, Vector3 _vmax)
 : SceneObject(_point, _color, _specular, _lambert, _ambiant)
 {
     type = "Box";

@@ -6,7 +6,7 @@
 
 
 
-Triangle::Triangle(Vector3 _point, Vector3 _color, float _specular, float _lambert, float _ambiant, Vector3 _a, Vector3 _b, Vector3 _c)
+Triangle::Triangle(Vector3 _point, Color _color, float _specular, float _lambert, float _ambiant, Vector3 _a, Vector3 _b, Vector3 _c)
 : SceneObject(_point, _color, _specular, _lambert, _ambiant), a(_a), b(_b), c(_c)
 {
     //ctor

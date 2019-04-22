@@ -3,7 +3,7 @@
 #include <limits>
 #include <iostream>
 
-Plane::Plane(Vector3 _point, Vector3 _color, float _specular, float _lambert, float _ambiant, Vector3 _normal)
+Plane::Plane(Vector3 _point, Color _color, float _specular, float _lambert, float _ambiant, Vector3 _normal)
 : SceneObject(_point, _color, _specular, _lambert, _ambiant), normal(_normal)
 {
     //ctor

@@ -25,7 +25,7 @@ class Scene : public IObserver
         Camera& getCamera() { return camera; };
         const bool IsneededUpdate() { return needUpdate; };
         virtual ~Scene();
-        const Vector3 backgroundColor() const { return Vector3(0.0f, 0.0f, 0.0f);};
+        const Color backgroundColor() const { return Color(0.0f, 0.0f, 0.0f);};
         void update(std::string data);
     private:
         float width;

@@ -2,7 +2,7 @@
 
 #include <limits>
 
-Disk::Disk(Vector3 _point, Vector3 _color, float _specular, float _lambert, float _ambiant, Vector3 _normal, float _radius)
+Disk::Disk(Vector3 _point, Color _color, float _specular, float _lambert, float _ambiant, Vector3 _normal, float _radius)
 : Plane(_point, _color, _specular, _lambert, _ambiant, _normal), radius(_radius)
 {
     //ctor

@@ -147,7 +147,7 @@ Vector3 Scene::surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime
 // }
 
 Vector3 Scene::trace(Ray& viewRay, int depth) {
-    Vector3 finalColor = backgroundColor();
+    Color finalColor = backgroundColor();
 
     distObject distObject1 = intersectScene(viewRay);
     const SceneObject* object1 = distObject1.object;
@@ -183,7 +183,7 @@ Vector3 Scene::trace(Ray& viewRay, int depth) {
         }
     }
 
-    return Vector3(std::min(finalColor.x, 255.0f), std::min(finalColor.y, 255.0f), std::min(finalColor.z, 255.0f));
+    return Vector3(std::min(finalColor.red(), 255.0f), std::min(finalColor.green(), 255.0f), std::min(finalColor.blue(), 255.0f));
 
 }
 
