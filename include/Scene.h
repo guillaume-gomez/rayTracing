@@ -40,7 +40,7 @@ class Scene : public IObserver
         Vector3 trace(Ray& ray, int depth);
         bool isLightVisible(const Vector3 point, const Light light);
         Vector3 surface(Ray& ray, const SceneObject* object, Vector3& pointAtTime, const Vector3 normal, int depth);
-        Vector3 getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light);
+        Color getLightAt(const Vector3& intersectionPoint, const SceneObject* object, const Light& light);
 };
 
 #endif // SCENE_H
